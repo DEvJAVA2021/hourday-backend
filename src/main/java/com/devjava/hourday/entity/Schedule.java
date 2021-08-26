@@ -27,14 +27,15 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "writer_id")
     private User writer;
 
-    @OneToOne
-    @JoinColumn(name = "memo_id")
-    private Memo memo;
-
     @Column(name = "write_date")
     private LocalDate writeDate;
 
+    private String memo;
+
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<DetailSchedule> detailScheduleList = new ArrayList<>();
 
 }

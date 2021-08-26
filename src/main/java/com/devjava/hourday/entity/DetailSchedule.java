@@ -25,6 +25,12 @@ public class DetailSchedule {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @Column(name = "start_time")
     private LocalTime startTime;
 
