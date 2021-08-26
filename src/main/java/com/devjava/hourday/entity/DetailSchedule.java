@@ -1,16 +1,13 @@
 package com.devjava.hourday.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Getter @Setter
 @Builder
 @Entity
 @Table(name = "detail_schedule")
