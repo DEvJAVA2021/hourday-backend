@@ -26,9 +26,13 @@ public enum ExceptionCode {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원이 존재하지 않습니다."),
     NICKNAME_EMAIL_DUPLICATION(HttpStatus.BAD_REQUEST, "닉네임 증복입니다."),
     PASSWORD_MISMATCH_ERROR(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+    USER_NOT_AUTHENTICATION(HttpStatus.BAD_REQUEST, "권한이 존재하지 않습니다."),
 
     // Schedule
-    SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "일정이 존재하지 않습니다.");
+    SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "일정이 존재하지 않습니다."),
+
+    // Follow
+    FOLLOW_DUPLICATION(HttpStatus.BAD_REQUEST, "이미 팔로우 한 상태입니다.");
 
 
     private final HttpStatus status;

@@ -42,4 +42,8 @@ public class UserService {
         if (userRepository.existsByNickname(user.getNickname())) throw new NicknameDuplicatedException();
     }
 
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
+
 }

@@ -1,8 +1,8 @@
 package com.devjava.hourday.controller;
 
 import com.devjava.hourday.common.dto.ResponseDto;
-import com.devjava.hourday.controller.dto.user.SignInRequestDto;
-import com.devjava.hourday.controller.dto.user.SignUpRequestDto;
+import com.devjava.hourday.dto.user.SignInRequestDto;
+import com.devjava.hourday.dto.user.SignUpRequestDto;
 import com.devjava.hourday.mapper.UserMapper;
 import com.devjava.hourday.service.UserService;
 import lombok.RequiredArgsConstructor;

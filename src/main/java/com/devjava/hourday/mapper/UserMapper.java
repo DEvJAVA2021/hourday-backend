@@ -1,7 +1,8 @@
 package com.devjava.hourday.mapper;
 
-import com.devjava.hourday.controller.dto.user.SignInRequestDto;
-import com.devjava.hourday.controller.dto.user.SignUpRequestDto;
+import com.devjava.hourday.dto.user.SignInRequestDto;
+import com.devjava.hourday.dto.user.SignUpRequestDto;
+import com.devjava.hourday.dto.user.UserDto;
 import com.devjava.hourday.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,5 +20,7 @@ public interface UserMapper {
     @Mapping(target = "isPublic", ignore = true)
     @Mapping(target = "scheduleList", ignore = true)
     User toEntity(SignInRequestDto requestDto);
+
+    UserDto toDto(User user);
 
 }
