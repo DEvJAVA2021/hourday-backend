@@ -1,44 +1,37 @@
 package com.devjava.hourday.controller;
 
+import com.devjava.hourday.common.dto.ResponseDto;
+import com.devjava.hourday.common.jwt.auth.CurrentUser;
 import com.devjava.hourday.dto.CategoryRequestDto;
-import com.devjava.hourday.entity.Category;
 import com.devjava.hourday.entity.User;
-import com.devjava.hourday.repository.CategoryRepository;
-import com.devjava.hourday.repository.UserRepository;
+import com.devjava.hourday.mapper.CategoryMapper;
+import com.devjava.hourday.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
+@RequestMapping(value = "/api/categories")
 public class CategoryController {
 
-//    @Autowired
-    private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
+    private final CategoryService categoryService;
 
-    @GetMapping("/api/categories/{userId}")
-    public List<Category> responseCategory(@PathVariable Long userId) {
-        User user = userRepository.findById(userId).get();
-        return categoryRepository.findAllByUser(user);
+    private final CategoryMapper categoryMapper;
+
+    @GetMapping
+    public ResponseEntity<ResponseDto> responseCategory(@CurrentUser User user) {
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.CREATED, "카테고리 조회 성공입니다.", categoryService.getCategoryList(user).stream().map(categoryMapper::toDto).collect(toList())));
     }
 
-    @PostMapping()
-    public void requestCategory(CategoryRequestDto form) {
-
-        // 1. dto를 변환! Entity!
-        Category category = form.toEntity();
-
-        // 2. Reposi에 entity를 DB안에 저장하게 함!
-        Category saved = categoryRepository.save(category);
-
-  //      "categoryName": "피아노치기",
-    //    "color": "234733",
-      //  "challengeTime": "1" // 시간당
+    @PostMapping
+    public ResponseEntity<ResponseDto> requestCategory(@RequestBody CategoryRequestDto requestDto, @CurrentUser User user) {
+        // dto를 변환! Entity!
+        categoryService.saveCategory(requestDto.toEntity(user));
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.CREATED, "카테고리 생성 성공입니다."));
     }
 
 
