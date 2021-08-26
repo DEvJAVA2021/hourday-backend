@@ -19,4 +19,8 @@ public class ScheduleService {
         return scheduleRepository.findByWriterAndWriteDate(user, date).orElseThrow(ScheduleNotFoundException::new);
     }
 
+    public Schedule getScheduleById(Long scheduleId) {
+        return scheduleRepository.findById(scheduleId).orElseThrow(ScheduleNotFoundException::new);
+    }
+
 }

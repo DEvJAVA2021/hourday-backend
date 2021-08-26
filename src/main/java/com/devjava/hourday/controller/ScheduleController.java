@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
-import static java.util.stream.Collectors.toList;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/schedules")
