@@ -34,5 +34,4 @@ public class CategoryController {
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.CREATED, "카테고리 생성 성공입니다."));
     }
 
-
 }

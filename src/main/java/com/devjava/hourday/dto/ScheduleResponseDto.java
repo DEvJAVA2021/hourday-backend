@@ -1,6 +1,6 @@
 package com.devjava.hourday.dto;
 
-import com.devjava.hourday.entity.DetailSchedule;
+import com.devjava.hourday.dto.user.UserDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +11,8 @@ import java.util.List;
 public class ScheduleResponseDto {
 
     private String memo;
+
+    private UserDto writer;
 
     private List<DetailScheduleDto> detailScheduleList = new ArrayList<>();
 
