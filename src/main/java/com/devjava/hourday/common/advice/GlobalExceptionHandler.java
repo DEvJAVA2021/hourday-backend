@@ -1,6 +1,6 @@
 package com.devjava.hourday.common.advice;
 
-import com.devjava.hourday.common.ResponseDto;
+import com.devjava.hourday.common.dto.ResponseDto;
 import com.devjava.hourday.common.advice.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,6 @@
 package com.devjava.hourday.entity;
 
+import com.devjava.hourday.common.jwt.auth.Authority;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,9 @@ public class User {
     @Builder.Default
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic = Boolean.FALSE;
+
+    @Builder.Default
+    private final String authority = Authority.ROLE_USER;
 
     @Builder.Default
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)

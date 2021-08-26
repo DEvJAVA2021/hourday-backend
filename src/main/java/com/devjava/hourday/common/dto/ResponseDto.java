@@ -1,4 +1,4 @@
-package com.devjava.hourday.common;
+package com.devjava.hourday.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
