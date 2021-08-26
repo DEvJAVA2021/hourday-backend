@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/schedules")
@@ -27,6 +29,11 @@ public class ScheduleController {
     @GetMapping("/{date}")
     public ResponseEntity<ResponseDto> getDetailScheduleList(@PathVariable String date, @CurrentUser User user) {
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "스케줄 상세 조회 성공입니다.", scheduleMapper.toDto(scheduleService.getScheduleList(user, LocalDate.parse(date)))));
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseDto> getAllScheduleList(@CurrentUser User user) {
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "스케줄 전체 조회 성공입니다.", scheduleService.getAllScheduleList(user).stream().map(scheduleMapper::toDto).collect(toList())));
     }
 
 }

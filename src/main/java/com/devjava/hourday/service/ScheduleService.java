@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +18,10 @@ public class ScheduleService {
 
     public Schedule getScheduleList(User user, LocalDate date) {
         return scheduleRepository.findByWriterAndWriteDate(user, date).orElseThrow(ScheduleNotFoundException::new);
+    }
+
+    public List<Schedule> getAllScheduleList(User user) {
+        return scheduleRepository.getAllScheduleList(user);
     }
 
     public Schedule getScheduleById(Long scheduleId) {

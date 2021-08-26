@@ -6,6 +6,7 @@ import com.devjava.hourday.dto.CategoryRequestDto;
 import com.devjava.hourday.entity.User;
 import com.devjava.hourday.mapper.CategoryMapper;
 import com.devjava.hourday.service.CategoryService;
+import com.devjava.hourday.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,5 @@ public class CategoryController {
         categoryService.saveCategory(requestDto.toEntity(user));
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.CREATED, "카테고리 생성 성공입니다."));
     }
-
 
 }
