@@ -1,7 +1,7 @@
 package com.devjava.hourday.mapper;
 
-import com.devjava.hourday.dto.CommentRequestDto;
-import com.devjava.hourday.dto.CommentResponseDto;
+import com.devjava.hourday.dto.comment.CommentRequestDto;
+import com.devjava.hourday.dto.comment.CommentResponseDto;
 import com.devjava.hourday.entity.Comment;
 import com.devjava.hourday.entity.Schedule;
 import com.devjava.hourday.entity.User;

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
@@ -21,17 +23,17 @@ public class UserController {
     private final UserMapper userMapper;
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
+    public ResponseEntity<ResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestDto) {
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.CREATED, "회원가입 성공입니다.", userService.signUp(userMapper.toEntity(requestDto))));
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInRequestDto requestDto) {
+    public ResponseEntity<ResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestDto) {
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "로그인 성공입니다.", userService.signIn(userMapper.toEntity(requestDto))));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ResponseDto> searchNickname(@RequestBody SearchNicknameDto requestDto) {
+    public ResponseEntity<ResponseDto> searchNickname(@RequestBody @Valid SearchNicknameDto requestDto) {
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, " 조회 성공입니다.", userMapper.toDto(userService.searchNickname(requestDto.getNickname()))));
     }
 

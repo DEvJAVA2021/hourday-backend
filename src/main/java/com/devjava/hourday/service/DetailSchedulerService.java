@@ -2,7 +2,7 @@ package com.devjava.hourday.service;
 
 import com.devjava.hourday.common.advice.exception.schedule.ScheduleNotFoundException;
 import com.devjava.hourday.common.advice.exception.user.UserAuthenticationException;
-import com.devjava.hourday.dto.ScheduleUpdateRequestDto;
+import com.devjava.hourday.dto.schedule.ScheduleUpdateRequestDto;
 import com.devjava.hourday.entity.Category;
 import com.devjava.hourday.entity.DetailSchedule;
 import com.devjava.hourday.entity.User;

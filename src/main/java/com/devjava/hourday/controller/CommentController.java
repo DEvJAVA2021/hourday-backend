@@ -3,7 +3,7 @@ package com.devjava.hourday.controller;
 import com.devjava.hourday.common.advice.exception.user.UserAuthenticationException;
 import com.devjava.hourday.common.dto.ResponseDto;
 import com.devjava.hourday.common.jwt.auth.CurrentUser;
-import com.devjava.hourday.dto.CommentRequestDto;
+import com.devjava.hourday.dto.comment.CommentRequestDto;
 import com.devjava.hourday.entity.Comment;
 import com.devjava.hourday.entity.Schedule;
 import com.devjava.hourday.entity.User;
@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static java.util.stream.Collectors.toList;
 
@@ -33,7 +35,7 @@ public class CommentController {
     }
 
     @PostMapping("/schedules/{scheduleId}/comments")
-    public ResponseEntity<ResponseDto> saveComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long scheduleId, @CurrentUser User user) {
+    public ResponseEntity<ResponseDto> saveComment(@RequestBody @Valid CommentRequestDto requestDto, @PathVariable Long scheduleId, @CurrentUser User user) {
         Schedule schedule = scheduleService.getScheduleById(scheduleId);
         if (!commentService.checkValid(schedule, user)) {
             throw new UserAuthenticationException();
@@ -43,7 +45,7 @@ public class CommentController {
     }
 
     @PatchMapping("/comments/{commentId}")
-    public ResponseEntity<ResponseDto> updateComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long commentId, @CurrentUser User user) {
+    public ResponseEntity<ResponseDto> updateComment(@RequestBody @Valid CommentRequestDto requestDto, @PathVariable Long commentId, @CurrentUser User user) {
         Comment comment = commentService.getCommentById(commentId);
         commentService.checkUpdateValid(comment, user); // 댓글 작성자 수정 권한 O
         commentService.updateComment(comment, requestDto.getContent());

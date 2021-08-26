@@ -1,4 +1,4 @@
-package com.devjava.hourday.dto;
+package com.devjava.hourday.dto.schedule;
 
 import com.devjava.hourday.dto.user.UserDto;
 import lombok.Getter;

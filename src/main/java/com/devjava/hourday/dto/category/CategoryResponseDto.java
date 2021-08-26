@@ -1,4 +1,4 @@
-package com.devjava.hourday.dto;
+package com.devjava.hourday.dto.category;
 
 import lombok.Getter;
 import lombok.Setter;

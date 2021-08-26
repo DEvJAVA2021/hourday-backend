@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -29,6 +30,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage()));
     }
 
+    /**
+     * javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
+     * HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
+     * 주로 @RequestBody, @RequestPart 어노테이션에서 발생
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ResponseDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("MethodArgumentNotValidException : " + e.getMessage());
+        final ExceptionCode exceptionCode = ExceptionCode.INVALID_INPUT_VALUE;
+        return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage()));
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<ResponseDto> httpMessageNotReadableException() {
         log.error("HttpMessageNotReadableException");
@@ -45,7 +58,6 @@ public class GlobalExceptionHandler {
         final ExceptionCode exceptionCode = ExceptionCode.METHOD_NOT_ALLOWED;
         return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage()));
     }
-
 
     /**
      * 예외 처리
