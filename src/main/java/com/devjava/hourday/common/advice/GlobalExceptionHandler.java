@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ResponseDto> businessException(final BusinessException e) {
         log.error("Business Exception : " + e.getMessage()); // 로깅 처리
         final ExceptionCode exceptionCode = e.getExceptionCode();
-        return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage(), exceptionCode.getStatus()));
+        return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage()));
     }
 
 
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ResponseDto> handleException(final Exception e) {
         log.error("Exception : " + e.getMessage());
         final ExceptionCode exceptionCode = ExceptionCode.INTERNAL_SERVER_ERROR;
-        return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage(), exceptionCode.getStatus()));
+        return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage()));
     }
 
 }
