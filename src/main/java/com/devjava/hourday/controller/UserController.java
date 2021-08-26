@@ -32,7 +32,7 @@ public class UserController {
 
     @GetMapping("/search")
     public ResponseEntity<ResponseDto> searchNickname(@RequestBody SearchNicknameDto requestDto) {
-        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, " 조회 성공입니다.", userService.searchNickname(requestDto.getNickname())));
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, " 조회 성공입니다.", userMapper.toDto(userService.searchNickname(requestDto.getNickname()))));
     }
 
 }
