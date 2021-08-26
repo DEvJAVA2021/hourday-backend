@@ -15,19 +15,27 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/schedules/{scheduleId}")
+@RequestMapping(value = "/api/schedules")
 public class DetailScheduleController {
 
     private final DetailSchedulerService detailScheduleService;
     private final ScheduleService scheduleService;
 
-    @PostMapping
+    @PostMapping(value = "/{scheduleId}")
     public ResponseEntity<ResponseDto> saveDetailSchedule(@RequestBody DetailScheduleDto requestDto, @PathVariable Long scheduleId, @CurrentUser User user) {
-        // 권한 체크
+        // 권한 확인
         Schedule schedule = scheduleService.checkValid(scheduleId, user);
         DetailSchedule detailSchedule = requestDto.toEntity(schedule);
         detailScheduleService.saveDetailSchedule(detailSchedule, requestDto.getCategoryId());
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.CREATED, "스케줄 세부정보 생성 성공입니다."));
+    }
+
+    @PatchMapping(value = "/detail/{detailScheduleId}")
+    public ResponseEntity<ResponseDto> addEndTime(@PathVariable Long detailScheduleId, @CurrentUser User user) {
+        // 권한 확인
+        DetailSchedule detailSchedule = detailScheduleService.checkValid(detailScheduleId, user);
+        detailScheduleService.updateEndTime(detailSchedule);
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "끝나는 시간 설정 성공입니다."));
     }
 
 }
