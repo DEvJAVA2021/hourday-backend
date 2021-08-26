@@ -25,10 +25,7 @@ public class DetailSchedulerService {
         return detailScheduleRepository.findAllBySchedule(schedule);
     }
 
-    public void saveDetailSchedule(DetailSchedule detailSchedule, Long scheduleId, Long categoryId) {
-        // 스케줄 설정
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(ScheduleNotFoundException::new);
-        detailSchedule.setSchedule(schedule);
+    public void saveDetailSchedule(DetailSchedule detailSchedule, Long categoryId) {
         // 카테고리 설정
         Category category = categoryRepository.findById(categoryId).orElseThrow(ScheduleNotFoundException::new);
         detailSchedule.setCategory(category);

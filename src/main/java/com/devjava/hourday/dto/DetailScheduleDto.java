@@ -2,6 +2,7 @@ package com.devjava.hourday.dto;
 
 import com.devjava.hourday.entity.Category;
 import com.devjava.hourday.entity.DetailSchedule;
+import com.devjava.hourday.entity.Schedule;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +17,8 @@ public class DetailScheduleDto {
 
     private Long categoryId;
 
-    public DetailSchedule toEntity() {
-        return DetailSchedule.builder().content(content).startTime(startTime).build();
+    public DetailSchedule toEntity(Schedule schedule) {
+        return DetailSchedule.builder().content(content).startTime(startTime).schedule(schedule).build();
     }
 
 }

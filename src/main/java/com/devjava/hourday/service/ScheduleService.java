@@ -1,6 +1,7 @@
 package com.devjava.hourday.service;
 
 import com.devjava.hourday.common.advice.exception.schedule.ScheduleNotFoundException;
+import com.devjava.hourday.common.advice.exception.user.UserAuthenticationException;
 import com.devjava.hourday.entity.Schedule;
 import com.devjava.hourday.entity.User;
 import com.devjava.hourday.repository.ScheduleRepository;
@@ -26,6 +27,14 @@ public class ScheduleService {
 
     public Schedule getScheduleById(Long scheduleId) {
         return scheduleRepository.findById(scheduleId).orElseThrow(ScheduleNotFoundException::new);
+    }
+
+    public Schedule checkValid(Long scheduleId, User user) {
+        Schedule schedule = getScheduleById(scheduleId);
+        if (!schedule.getWriter().getId().equals(user.getId())) {
+            throw new UserAuthenticationException();
+        }
+        return schedule;
     }
 
 }
