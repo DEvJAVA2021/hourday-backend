@@ -14,16 +14,25 @@ import java.util.List;
 @Service
 public class CommentService {
     
-    private final CommentRepository commentRepository;
     private final FollowService followService;
-    
+
+    private final CommentRepository commentRepository;
+
     public List<Comment> getCommentList(Schedule schedule, User user) {
-        if (schedule.getWriter().getIsPublic() || followService.checkFollow(user, schedule.getWriter())) {
+        if (checkValid(schedule, user)) {
             return commentRepository.findAllBySchedule(schedule);
         }
         else {
             throw new UserAuthenticationException();
         }
+    }
+
+    public boolean checkValid(Schedule schedule, User user) {
+        return schedule.getWriter().getIsPublic() || followService.checkFollow(user, schedule.getWriter());
+    }
+
+    public void saveComment(Comment comment) {
+        commentRepository.save(comment);
     }
 
 }

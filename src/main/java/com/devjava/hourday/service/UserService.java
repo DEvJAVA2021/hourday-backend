@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -25,7 +23,7 @@ public class UserService {
     private final JwtService jwtService;
 
     public TokenDto signUp(User user) {
-        validate(user); // 중복 검사
+        checkValid(user); // 중복 검사
         user.encodePassword(passwordEncoder.encode(user.getPassword())); // 비밀번호 암호화
         userRepository.save(user);
         return jwtService.issue(user);
@@ -39,7 +37,7 @@ public class UserService {
         return jwtService.issue(findUser);
     }
 
-    private void validate(User user) {
+    private void checkValid(User user) {
         if (userRepository.existsByEmail(user.getEmail())) throw new EmailDuplicatedException();
         if (userRepository.existsByNickname(user.getNickname())) throw new NicknameDuplicatedException();
     }
