@@ -25,7 +25,10 @@ public enum ExceptionCode {
     EMAIL_DUPLICATION(HttpStatus.BAD_REQUEST, "이메일 중복입니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원이 존재하지 않습니다."),
     NICKNAME_EMAIL_DUPLICATION(HttpStatus.BAD_REQUEST, "닉네임 증복입니다."),
-    PASSWORD_MISMATCH_ERROR(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+    PASSWORD_MISMATCH_ERROR(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+
+    // Schedule
+    SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "일정이 존재하지 않습니다.");
 
 
     private final HttpStatus status;

@@ -28,7 +28,7 @@ public class ScheduleController {
 
     @GetMapping("/{date}")
     public ResponseEntity<ResponseDto> getDetailScheduleList(@PathVariable String date, @CurrentUser User user) {
-        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "스케줄 상세 조회 성공입니다.", scheduleService.getScheduleList(user, LocalDate.parse(date)).stream().map(scheduleMapper::toDto).collect(toList())));
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "스케줄 상세 조회 성공입니다.", scheduleMapper.toDto(scheduleService.getScheduleList(user, LocalDate.parse(date)))));
     }
 
 }
