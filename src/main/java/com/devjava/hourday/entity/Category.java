@@ -32,4 +32,5 @@ public class Category {
     @Column(name = "challenge_time")
     private int challengeTime;
 
+
 }
