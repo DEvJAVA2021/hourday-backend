@@ -2,6 +2,7 @@ package com.devjava.hourday.service;
 
 import com.devjava.hourday.common.advice.exception.schedule.ScheduleNotFoundException;
 import com.devjava.hourday.common.advice.exception.user.UserAuthenticationException;
+import com.devjava.hourday.dto.ScheduleUpdateRequestDto;
 import com.devjava.hourday.entity.Category;
 import com.devjava.hourday.entity.DetailSchedule;
 import com.devjava.hourday.entity.User;
@@ -28,6 +29,17 @@ public class DetailSchedulerService {
     public void updateEndTime(DetailSchedule detailSchedule) {
         detailSchedule.setEndTime(LocalTime.now());
         detailScheduleRepository.save(detailSchedule);
+    }
+
+    public void updateDetailSchedule(DetailSchedule detailSchedule, ScheduleUpdateRequestDto requestDto) {
+        detailSchedule.setStartTime(requestDto.getStartTime());
+        detailSchedule.setEndTime(requestDto.getEndTime());
+        detailSchedule.setContent(requestDto.getContent());
+        detailScheduleRepository.save(detailSchedule);
+    }
+
+    public void deleteDetailSchedule(DetailSchedule detailSchedule) {
+        detailScheduleRepository.delete(detailSchedule);
     }
 
     public DetailSchedule checkValid(Long detailScheduleId, User user) {

@@ -4,6 +4,7 @@ import com.devjava.hourday.common.advice.exception.user.UserAuthenticationExcept
 import com.devjava.hourday.common.dto.ResponseDto;
 import com.devjava.hourday.common.jwt.auth.CurrentUser;
 import com.devjava.hourday.dto.CommentRequestDto;
+import com.devjava.hourday.entity.Comment;
 import com.devjava.hourday.entity.Schedule;
 import com.devjava.hourday.entity.User;
 import com.devjava.hourday.mapper.CommentMapper;
@@ -18,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/schedules/{scheduleId}/comments")
+@RequestMapping(value = "/api")
 public class CommentController {
 
     private final CommentService commentService;
@@ -26,12 +27,12 @@ public class CommentController {
 
     private final CommentMapper commentMapper;
 
-    @GetMapping
+    @GetMapping("/schedules/{scheduleId}/comments")
     public ResponseEntity<ResponseDto> getCommentList(@PathVariable Long scheduleId, @CurrentUser User user) {
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "댓글 리스트 조회 성공입니다.", commentService.getCommentList(scheduleService.getScheduleById(scheduleId), user).stream().map(commentMapper::toDto).collect(toList())));
     }
 
-    @PostMapping
+    @PostMapping("/schedules/{scheduleId}/comments")
     public ResponseEntity<ResponseDto> saveComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long scheduleId, @CurrentUser User user) {
         Schedule schedule = scheduleService.getScheduleById(scheduleId);
         if (!commentService.checkValid(schedule, user)) {
@@ -39,6 +40,22 @@ public class CommentController {
         }
         commentService.saveComment(commentMapper.toEntity(requestDto, user, schedule));
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.CREATED, "댓글 작성 성공입니다."));
+    }
+
+    @PatchMapping("/comments/{commentId}")
+    public ResponseEntity<ResponseDto> updateComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long commentId, @CurrentUser User user) {
+        Comment comment = commentService.getCommentById(commentId);
+        commentService.checkUpdateValid(comment, user); // 댓글 작성자 수정 권한 O
+        commentService.updateComment(comment, requestDto.getContent());
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "댓글 수정 성공입니다."));
+    }
+
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<ResponseDto> deleteComment(@PathVariable Long commentId, @CurrentUser User user) {
+        Comment comment = commentService.getCommentById(commentId);
+        commentService.checkDeleteValid(comment, user); // 스케줄 작성자와 댓글 작성자 삭제 권한 O
+        commentService.deleteComment(comment);
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "댓글 삭제 성공입니다."));
     }
 
 }

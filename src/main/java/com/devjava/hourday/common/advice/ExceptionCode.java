@@ -32,6 +32,9 @@ public enum ExceptionCode {
     // Schedule
     SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "일정이 존재하지 않습니다."),
 
+    // Comment
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "댓글이 존재하지 않습니다."),
+
     // Follow
     FOLLOW_DUPLICATION(HttpStatus.BAD_REQUEST, "이미 팔로우 한 상태입니다.");
 
