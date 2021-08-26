@@ -4,12 +4,15 @@ import com.devjava.hourday.common.dto.ResponseDto;
 import com.devjava.hourday.common.advice.exception.BusinessException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import static java.util.stream.Collectors.toList;
 
 // 접근 기록, 인증 정보 실패 기록
 @Slf4j
@@ -39,7 +42,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ResponseDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("MethodArgumentNotValidException : " + e.getMessage());
         final ExceptionCode exceptionCode = ExceptionCode.INVALID_INPUT_VALUE;
-        return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage()));
+        return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage(), e.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(toList())));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
