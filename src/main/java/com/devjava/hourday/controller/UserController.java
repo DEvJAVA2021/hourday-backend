@@ -3,15 +3,13 @@ package com.devjava.hourday.controller;
 import com.devjava.hourday.common.dto.ResponseDto;
 import com.devjava.hourday.dto.user.SignInRequestDto;
 import com.devjava.hourday.dto.user.SignUpRequestDto;
+import com.devjava.hourday.dto.user.SearchNicknameDto;
 import com.devjava.hourday.mapper.UserMapper;
 import com.devjava.hourday.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,6 +28,11 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<ResponseDto> signIn(@RequestBody SignInRequestDto requestDto) {
         return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "로그인 성공입니다.", userService.signIn(userMapper.toEntity(requestDto))));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDto> searchNickname(@RequestBody SearchNicknameDto requestDto) {
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, " 조회 성공입니다.", userService.searchNickname(requestDto.getNickname())));
     }
 
 }

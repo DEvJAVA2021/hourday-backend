@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -44,6 +46,10 @@ public class UserService {
 
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
+
+    public User searchNickname(String nickname) {
+        return userRepository.findByNickname(nickname).orElseThrow(UserNotFoundException::new);
     }
 
 }
