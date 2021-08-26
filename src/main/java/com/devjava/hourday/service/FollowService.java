@@ -16,10 +16,14 @@ public class FollowService {
 
     public void follow(User following, Long followerId) {
         User follower = userService.getUserById(followerId);
-        if (followRepository.existsByFollowingAndFollower(following, follower)) {
+        if (checkFollow(following, follower)) {
             throw new FollowDuplicatedException();
         }
         followRepository.save(Follow.builder().following(following).follower(follower).build());
+    }
+
+    public boolean checkFollow(User following, User follower) {
+        return followRepository.existsByFollowingAndFollower(following, follower);
     }
 
 }

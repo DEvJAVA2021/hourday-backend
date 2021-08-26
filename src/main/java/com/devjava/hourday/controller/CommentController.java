@@ -1,6 +1,8 @@
 package com.devjava.hourday.controller;
 
 import com.devjava.hourday.common.dto.ResponseDto;
+import com.devjava.hourday.common.jwt.auth.CurrentUser;
+import com.devjava.hourday.entity.User;
 import com.devjava.hourday.mapper.CommentMapper;
 import com.devjava.hourday.service.CommentService;
 import com.devjava.hourday.service.ScheduleService;
@@ -25,8 +27,8 @@ public class CommentController {
     private final CommentMapper commentMapper;
 
     @GetMapping("/schedules/{scheduleId}/comments")
-    public ResponseEntity<ResponseDto> getCommentList(@PathVariable Long scheduleId) {
-        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "댓글 리스트 조회 성공입니다.", commentService.getCommentList(scheduleService.getScheduleById(scheduleId)).stream().map(commentMapper::toDto).collect(toList())));
+    public ResponseEntity<ResponseDto> getCommentList(@PathVariable Long scheduleId, @CurrentUser User user) {
+        return ResponseEntity.ok(ResponseDto.of(HttpStatus.OK, "댓글 리스트 조회 성공입니다.", commentService.getCommentList(scheduleService.getScheduleById(scheduleId), user).stream().map(commentMapper::toDto).collect(toList())));
     }
 
 }

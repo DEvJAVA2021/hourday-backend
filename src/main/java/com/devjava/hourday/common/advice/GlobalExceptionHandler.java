@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-
 // 접근 기록, 인증 정보 실패 기록
 @Slf4j
 @ControllerAdvice
@@ -19,7 +18,6 @@ public class GlobalExceptionHandler {
         final ExceptionCode exceptionCode = e.getExceptionCode();
         return ResponseEntity.badRequest().body(ResponseDto.of(exceptionCode.getStatus(), exceptionCode.getMessage()));
     }
-
 
     /**
      * 예외 처리
