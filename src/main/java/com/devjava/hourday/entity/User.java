@@ -4,6 +4,7 @@ import com.devjava.hourday.common.jwt.auth.Authority;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,18 @@ public class User {
     @Builder.Default
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic = Boolean.FALSE;
+
+    @Column(name = "login_fail_count")
+    private int loginFailCount;
+
+    @Column(name = "is_lock")
+    private Boolean isLock = Boolean.FALSE;
+
+    @Column(name = "lock_count")
+    private int lockCount;
+
+    @Column(name = "latest_lock_date")
+    private LocalDateTime latestLockDate;
 
     @Builder.Default
     private final String authority = Authority.ROLE_USER;
