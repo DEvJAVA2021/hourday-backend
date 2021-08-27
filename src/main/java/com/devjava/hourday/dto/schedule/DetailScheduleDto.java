@@ -14,7 +14,7 @@ public class DetailScheduleDto {
     @NotBlank
     private String content;
 
-    private final LocalTime startTime = LocalTime.now();
+    private LocalTime startTime;
 
     @NotBlank
     private Long categoryId;

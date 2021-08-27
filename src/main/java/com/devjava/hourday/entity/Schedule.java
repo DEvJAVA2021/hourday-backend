@@ -32,9 +32,11 @@ public class Schedule extends BaseEntity {
 
     private String memo;
 
+    @Builder.Default
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<DetailSchedule> detailScheduleList = new ArrayList<>();
 
