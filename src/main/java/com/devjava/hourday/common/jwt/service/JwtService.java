@@ -15,6 +15,6 @@ public class JwtService {
 
     @Transactional
     public TokenDto issue(User user) {
-        return new TokenDto(jwtCreator.createAccessToken(user));
+        return new TokenDto(jwtCreator.createAccessToken(user), user.getNickname());
     }
 }
